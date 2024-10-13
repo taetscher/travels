@@ -1,0 +1,26 @@
+/* FOR USE WITH OVERPASS TURBO --> http://overpass-turbo.eu/# */
+//this query selects all point and polygon features related to swimming activities within switzerland
+
+[out:json][timeout:1000];
+
+//define search area
+{{geocodeArea:Switzerland}}->.searchArea;
+
+// gather results
+(
+    node["sport"="swimming"]["name"](area.searchArea);
+    node["leisure"="swimming_area"]["name"](area.searchArea);
+    node["leisure"="swimming_pool"]["name"](area.searchArea);
+    node["natural"="beach"]["name"](area.searchArea);
+    node["amenity"="public_bath"]["name"](area.searchArea);
+    node["leisure"="water_park"]["name"](area.searchArea);
+    way["sport"="swimming"]["name"](area.searchArea);
+    way["leisure"="sports_centre"]["sport"="swimming"]["name"](area.searchArea);
+    way["leisure"="water_park"]["name"](area.searchArea);
+    relation["leisure"="sports_centre"]["sport"="swimming"]["name"](area.searchArea);
+);
+
+// print results
+out body;
+>;
+out skel qt;

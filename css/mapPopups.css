@@ -1,0 +1,38 @@
+/* Popup Styling */
+
+:root{
+    --background_color: rgba(79, 79, 79, 0.75);
+    --font_color: #ffd43b;
+}
+
+/* style popup content */
+.mapboxgl-popup {
+    color: var(--font_color);
+}
+
+.mapboxgl-popup-content {
+    background-color: var(--background_color);
+}
+
+
+
+/* style popup arrows (top, left, etc.)*/
+.mapboxgl-popup-content-wrapper {
+    background-color: var(--background_color);
+    }
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+    border-bottom-color: var(--background_color);
+    }
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+    border-top-color: var(--background_color);
+    }
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+    border-right-color: var(--background_color);
+    }
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+    border-left-color: var(--background_color);
+    }

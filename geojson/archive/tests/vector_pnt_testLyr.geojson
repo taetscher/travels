@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"name": "vector_pnt_testLyr",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 0, "name": "test_1", "value": 1.0 }, "geometry": { "type": "Point", "coordinates": [ 7.632526185444999, 46.756131187438982 ] } },
+{ "type": "Feature", "properties": { "id": 1, "name": "test_2", "value": 2.0 }, "geometry": { "type": "Point", "coordinates": [ 7.632416574267663, 46.756679243325664 ] } },
+{ "type": "Feature", "properties": { "id": 2, "name": "test_3", "value": 3.0 }, "geometry": { "type": "Point", "coordinates": [ 7.635303001937528, 46.750778508279041 ] } },
+{ "type": "Feature", "properties": { "id": 4, "name": "Jakobshuebeli", "value": 4.0 }, "geometry": { "type": "Point", "coordinates": [ 7.638225966666506, 46.753116880062215 ] } },
+{ "type": "Feature", "properties": { "id": 5, "name": "molkereiweg 3", "value": 5.0 }, "geometry": { "type": "Point", "coordinates": [ 7.62881767394511, 46.756423483911881 ] } },
+{ "type": "Feature", "properties": { "id": 10, "name": "FULEHUNG!", "value": 1337.0 }, "geometry": { "type": "Point", "coordinates": [ 7.629018627770227, 46.761282912773808 ] } }
+]
+}

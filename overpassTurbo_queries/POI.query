@@ -1,0 +1,21 @@
+/* FOR USE WITH OVERPASS TURBO --> http://overpass-turbo.eu/# */
+//this query selects all point and polygon features related to BWI-POIs within switzerland
+
+[out:json][timeout:1000];
+
+//define search area
+{{geocodeArea:Switzerland}}->.searchArea;
+
+// gather results
+(
+    node["shop"="kiosk"]["name"](area.searchArea);
+  	node["shop"="convenience"]["name"](area.searchArea);
+	node["leisure"="firepit"](area.searchArea);
+    node["tourism"="picnic_site"](area.searchArea);
+  	node["amenity"="bbq"](area.searchArea);
+);
+
+// print results
+out body;
+>;
+out skel qt;
