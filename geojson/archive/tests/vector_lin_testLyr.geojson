@@ -1,8 +1,0 @@
-{
-"type": "FeatureCollection",
-"name": "vector_lin_testLyr",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-"features": [
-{ "type": "Feature", "properties": { "id": 0 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 7.620283401900799, 46.76067230587168 ], [ 7.630922513928255, 46.753700442197413 ], [ 7.632541509236781, 46.751323464313359 ], [ 7.633119721846972, 46.748629429308913 ], [ 7.626065528002679, 46.743716430579703 ], [ 7.623868320083961, 46.736425349205511 ] ] ] } }
-]
-}

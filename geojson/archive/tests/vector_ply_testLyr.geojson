@@ -1,8 +1,0 @@
-{
-"type": "FeatureCollection",
-"name": "vector_ply_testLyr",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-"features": [
-{ "type": "Feature", "properties": { "id": 0, "name": "Molki" }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 7.628778803655203, 46.756578490207737 ], [ 7.629106650679256, 46.756410476248107 ], [ 7.628794292490984, 46.756198247339796 ], [ 7.62853614522795, 46.756406939106476 ], [ 7.628778803655203, 46.756578490207737 ] ] ] ] } }
-]
-}
