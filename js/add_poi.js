@@ -6,42 +6,40 @@ export function addPOIs(map, popup) {
     */
     
     //in order to use data with mapbox, you need to add a source first
-    map.addSource('BWI_poi_source', {
+    map.addSource('poi_source', {
             type: 'geojson',
             data: './geojson/poi.geojson',
-            attribution: "© OpenStreetMap contributors"
+            attribution: "© taetscher"
         })
     
-    //add the layer
-    map.addLayer({
-        id: 'bwi_poi',
-        type: 'circle',
-        source: 'BWI_poi_source',
-        minzoom: 13.5,
-        maxzoom: 19,
-        paint: {
-            'circle-radius': 4,
-            'circle-color': '#ffdc8a',
-            "circle-opacity": 0.5,
-            "circle-stroke-width": 1,
-            "circle-stroke-color": '#000000'
-        }
-        })
+    //load an icon to be used to display location of swimming spots
+    map.loadImage('./mapstyles/icons/loc.png', function (error, image){
+        
+        //add the image to the map
+        map.addImage('poi', image);
     
-    
+        //add the layer
+        map.addLayer({
+            id: 'pois',
+            type: 'symbol',
+            source: 'poi_source',
+            layout: {
+                'icon-image': 'poi',
+                'icon-size': 1
+            }
+            })
+        });
     //-------------- USER INTERACTION HANDLING START --------------------
     
     //display popup on mouseenter
-    map.on('mouseenter', 'bwi_poi', function (e) {
+    map.on('mouseenter', 'travels_poi', function (e) {
 
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
 
         var coordinates = e.features[0].geometry.coordinates.slice();
-        var name = e.features[0].properties;
-        
-        
-
+        var name = e.features[0].properties.name;
+              
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
         // over the copy being pointed to.
@@ -55,7 +53,7 @@ export function addPOIs(map, popup) {
     });
     
     //remove popup on mousleave
-    map.on('mouseleave', 'bwi_poi', function () {
+    map.on('mouseleave', 'travels_poi', function () {
         map.getCanvas().style.cursor = '';
         if (popup) popup.remove();
     });

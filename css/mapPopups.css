@@ -14,8 +14,6 @@
     background-color: var(--background_color);
 }
 
-
-
 /* style popup arrows (top, left, etc.)*/
 .mapboxgl-popup-content-wrapper {
     background-color: var(--background_color);
