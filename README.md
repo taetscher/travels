@@ -1,2 +1,4 @@
 # travels
-Map of my personal travels
+Map of my personal travels.
+
+Work in Progress!
