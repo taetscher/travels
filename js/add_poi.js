@@ -1,9 +1,12 @@
-export function addPOIs(map, popup) {
+export async function addPOIs(map, popup) {
     /**
     *Add source, layer and user interaction of poi to map
     *@param  {mapbox map object}   map   The map which receives the poi layer
     *@param  {mapbox popup object} popup The mapbox popup object which receives tooltip information
     */
+
+    const image = await map.loadImage('./mapstyles/icons/loc.png');
+    map.addImage('custom_poi', image.data);
     
     //in order to use data with mapbox, you need to add a source first
     map.addSource('poi_source', {
@@ -12,23 +15,16 @@ export function addPOIs(map, popup) {
             attribution: "© taetscher"
         })
     
-    //load an icon to be used to display location of swimming spots
-    map.loadImage('./mapstyles/icons/loc.png', function (error, image){
-        
-        //add the image to the map
-        map.addImage('poi', image);
-    
-        //add the layer
-        map.addLayer({
-            id: 'pois',
-            type: 'symbol',
-            source: 'poi_source',
-            layout: {
-                'icon-image': 'poi',
-                'icon-size': 1
-            }
-            })
-        });
+    //add the layer
+    map.addLayer({
+        id: 'pois',
+        type: 'symbol',
+        source: 'poi_source',
+        layout: {
+            'icon-image': 'custom_poi',
+            'icon-size': 0.3
+        }
+        })
     //-------------- USER INTERACTION HANDLING START --------------------
     
     //display popup on mouseenter
