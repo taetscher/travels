@@ -1,4 +1,5 @@
 @import url('./mapPopups.css');
+@import url('./maplibreStyleBar.css');
 
 #map {
     position: absolute;

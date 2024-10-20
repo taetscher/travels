@@ -11,17 +11,18 @@ const map = new maplibregl.Map({
             hash: true, //set this to true when productive (shows xyz in URL and updates it on the fly)
             minZoom: 1,
             maxZoom: 19,
-            center: [28.43, -8.09],
+            center: [47.5, 2.6],
             zoom: 2
             //,preserveDrawingBuffer: true
           });
 
-//add map control (navigation) buttons
+//add map controls
 map.addControl(new maplibregl.NavigationControl());
+map.addControl(new maplibregl.ScaleControl({position: "bottom-left"}))
 
 //create a popup object (not added to map yet)
 //do this here, so only one is added
-const popup = new maplibregl.Popup({
+var popup = new maplibregl.Popup({
     closeButton: false,
     closeOnClick: false
     });

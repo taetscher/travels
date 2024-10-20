@@ -12,7 +12,10 @@ export async function addPOIs(map, popup) {
     map.addSource('poi_source', {
             type: 'geojson',
             data: './geojson/poi.geojson',
-            attribution: "© taetscher"
+            attribution: "© taetscher",
+            //cluster: true,
+            //clusterMaxZoom: 7,
+            //clusterRadius: 50
         })
     
     //add the layer
@@ -20,15 +23,17 @@ export async function addPOIs(map, popup) {
         id: 'pois',
         type: 'symbol',
         source: 'poi_source',
+        maxzoom: 8,
         layout: {
             'icon-image': 'custom_poi',
-            'icon-size': 0.3
+            'icon-size': 0.3,
+            'icon-overlap': "never"
         }
         })
     //-------------- USER INTERACTION HANDLING START --------------------
     
     //display popup on mouseenter
-    map.on('mouseenter', 'travels_poi', function (e) {
+    map.on('mouseenter', 'pois', function (e) {
 
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
@@ -45,11 +50,11 @@ export async function addPOIs(map, popup) {
 
         // Populate the popup and set its coordinates
         // based on the feature found.
-        popup.setLngLat(coordinates).setHTML(JSON.stringify(name)).addTo(map);
+        popup.setLngLat(coordinates).setHTML(name).addTo(map);
     });
     
     //remove popup on mousleave
-    map.on('mouseleave', 'travels_poi', function () {
+    map.on('mouseleave', 'pois', function () {
         map.getCanvas().style.cursor = '';
         if (popup) popup.remove();
     });

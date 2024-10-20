@@ -12,15 +12,45 @@ export function addTravels(map, popup) {
             attribution: "© taetscher"
         })
 
-    //add the layer
+    //add the travel layers
     map.addLayer({
-        id: 'travels_layer',
+        id: 'flights_layer',
         type: 'line',
         source: 'travels',
+        maxzoom: 4.5,
+        filter: ["==", ["get", "kind"], "flight"],
         paint: {
-            'line-width': 2,
+            'line-width': 1,
             'line-dasharray': [1, 2.5],
             'line-color': "#070424"
+        }
+        })
+
+    map.addLayer({
+        id: 'car_layer',
+        type: 'line',
+        source: 'travels',
+        minzoom: 4.5,
+        filter: ["==", ["get", "kind"], "car"],
+        paint: {
+            'line-width': 2,
+            //'line-dasharray': [1, 0.5],
+            'line-color': "#7e8082"
+        },
+        layout: {
+            'line-join': "round"
+        }
+        })
+
+    map.addLayer({
+        id: 'ferry_layer',
+        type: 'line',
+        source: 'travels',
+        filter: ["==", ["get", "kind"], "ferry"],
+        paint: {
+            'line-width': 1.5,
+            'line-dasharray': [3, 3],
+            'line-color': "#2f6ca8"
         }
         })
 }

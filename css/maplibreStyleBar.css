@@ -1,0 +1,7 @@
+.maplibregl-ctrl-scale {
+    background: rgba(250, 243, 220, 0.5);
+    color: #070424;
+    border-radius: 0.5em;
+    border-color: #070424b6;
+    border-width: 0.1em;
+}
