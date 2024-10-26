@@ -3,7 +3,6 @@ import {addPOIs} from './add_poi.js';
 import {addTravels} from './add_travels.js';
 
 
-//-------------- INITIALIZE MAP START --------------------
 //create new map
 const map = new maplibregl.Map({
             container: 'map',
@@ -20,19 +19,10 @@ const map = new maplibregl.Map({
 map.addControl(new maplibregl.NavigationControl());
 map.addControl(new maplibregl.ScaleControl({position: "bottom-left"}))
 
-//create a popup object (not added to map yet)
-//do this here, so only one is added
-var popup = new maplibregl.Popup({
-    closeButton: false,
-    closeOnClick: false
-    });
-
 //when map is loaded, load additional layers
 map.on('load', function() {
     
-    addTravels(map, popup);
-    addPOIs(map, popup);
+    addTravels(map);
+    addPOIs(map);
 
 });
-
-//-------------- INITIALIZE MAP END --------------------

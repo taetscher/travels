@@ -1,12 +1,13 @@
-export async function addPOIs(map, popup) {
+import {add_poi_tooltip, add_poi_iframe, remove_poi_tooltip} from './poi_tooltips.js';
+
+export async function addPOIs(map) {
     /**
     *Add source, layer and user interaction of poi to map
     *@param  {mapbox map object}   map   The map which receives the poi layer
-    *@param  {mapbox popup object} popup The mapbox popup object which receives tooltip information
     */
 
-    const image = await map.loadImage('./mapstyles/icons/loc.png');
-    map.addImage('custom_poi', image.data);
+    const poi_signature = await map.loadImage('./mapstyles/icons/loc.png');
+    map.addImage('custom_poi', poi_signature.data);
     
     //in order to use data with mapbox, you need to add a source first
     map.addSource('poi_source', {
@@ -30,34 +31,45 @@ export async function addPOIs(map, popup) {
             'icon-overlap': "never"
         }
         })
-    //-------------- USER INTERACTION HANDLING START --------------------
     
+    //create a popup objects
+    const markerHeight = 5, markerRadius = 5, linearOffset = 5;
+    const popupOffsets = {
+        'top': [0, 0],
+        'top-left': [0,0],
+        'top-right': [0,0],
+        'bottom': [0, -markerHeight],
+        'bottom-left': [linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+        'bottom-right': [-linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+        'left': [markerRadius, (markerHeight - markerRadius) * -1],
+        'right': [-markerRadius, (markerHeight - markerRadius) * -1]
+        };
+
+    var hover_popup = new maplibregl.Popup({
+        offset: popupOffsets,
+        className: 'poi_hover',
+        closeButton: false,
+        closeOnClick: false,
+        closeOnMove: true
+        });
+
+    var iframe_popup = new maplibregl.Popup({
+        offset: popupOffsets,
+        className: 'poi_iframe',
+        closeButton: true,
+        closeOnClick: true,
+        closeOnMove: true,
+        maxWidth: 'none'
+        });
+
+    // handle tooltips
     //display popup on mouseenter
-    map.on('mouseenter', 'pois', function (e) {
+    add_poi_tooltip(map, 'pois', hover_popup)
 
-        // Change the cursor style as a UI indicator.
-        map.getCanvas().style.cursor = 'pointer';
-
-        var coordinates = e.features[0].geometry.coordinates.slice();
-        var name = e.features[0].properties.name;
-              
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-
-        // Populate the popup and set its coordinates
-        // based on the feature found.
-        popup.setLngLat(coordinates).setHTML(name).addTo(map);
-    });
+    // display iframe on click
+    add_poi_iframe(map, 'pois', iframe_popup)
     
     //remove popup on mousleave
-    map.on('mouseleave', 'pois', function () {
-        map.getCanvas().style.cursor = '';
-        if (popup) popup.remove();
-    });
-    
-    //-------------- USER INTERACTION HANDLING END --------------------
+    remove_poi_tooltip(map, 'pois', hover_popup)
+
 }

@@ -5,32 +5,7 @@
     --font_color: #ffd43b;
 }
 
-/* style popup content */
-.mapboxgl-popup {
-    color: var(--font_color);
+#map > div.maplibregl-popup.poi_iframe.maplibregl-popup-anchor-bottom > div.maplibregl-popup-content{
+    min-width: 50%;
+    min-height: 50%;
 }
-
-.mapboxgl-popup-content {
-    background-color: var(--background_color);
-}
-
-/* style popup arrows (top, left, etc.)*/
-.mapboxgl-popup-content-wrapper {
-    background-color: var(--background_color);
-    }
-.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
-.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
-.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
-    border-bottom-color: var(--background_color);
-    }
-.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
-.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
-.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
-    border-top-color: var(--background_color);
-    }
-.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
-    border-right-color: var(--background_color);
-    }
-.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
-    border-left-color: var(--background_color);
-    }
