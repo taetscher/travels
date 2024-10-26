@@ -1,0 +1,15 @@
+
+iframe {
+    border-style: none !important;
+    border-radius: 1em !important;
+    background-color: rgba(240, 248, 255, 0.089);
+}
+
+.poi_iframe_container{
+    position: flex;
+    border: none;
+    margin: 1em; /*control distance to signature of poi*/
+    padding: 1em;
+    top: 0; right: 0; bottom: 0; left: 0;
+    
+}

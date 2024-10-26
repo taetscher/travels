@@ -1,6 +1,10 @@
-@import url('./mapPopups.css');
-@import url('./maplibreStyleBar.css');
-@import url('./iframe.css');
+@import url('./popups/mapPopups.css');
+@import url('./popups/iframes/iframes.css');
+@import url('./popups/hover/hover_popups.css');
+@import url('./popups/wikipedia/wiki.css');
+@import url('./mapelements/maplibreStyleBar.css');
+
+
 
 #map {
     position: absolute;

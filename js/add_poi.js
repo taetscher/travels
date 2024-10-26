@@ -24,7 +24,7 @@ export async function addPOIs(map) {
         id: 'pois',
         type: 'symbol',
         source: 'poi_source',
-        maxzoom: 8,
+        maxzoom: 14,
         layout: {
             'icon-image': 'custom_poi',
             'icon-size': 0.3,
@@ -33,33 +33,21 @@ export async function addPOIs(map) {
         })
     
     //create a popup objects
-    const markerHeight = 5, markerRadius = 5, linearOffset = 5;
-    const popupOffsets = {
-        'top': [0, 0],
-        'top-left': [0,0],
-        'top-right': [0,0],
-        'bottom': [0, -markerHeight],
-        'bottom-left': [linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
-        'bottom-right': [-linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
-        'left': [markerRadius, (markerHeight - markerRadius) * -1],
-        'right': [-markerRadius, (markerHeight - markerRadius) * -1]
-        };
 
     var hover_popup = new maplibregl.Popup({
-        offset: popupOffsets,
         className: 'poi_hover',
         closeButton: false,
         closeOnClick: false,
-        closeOnMove: true
+        closeOnMove: true,
+        maxWidth: 'none'
         });
 
     var iframe_popup = new maplibregl.Popup({
-        offset: popupOffsets,
-        className: 'poi_iframe',
-        closeButton: true,
+        className: 'poi_iframe_container',
+        closeButton: false,
         closeOnClick: true,
-        closeOnMove: true,
-        maxWidth: 'none'
+        closeOnMove: false,
+        maxWidth: '60%'
         });
 
     // handle tooltips

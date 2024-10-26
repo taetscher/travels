@@ -4,19 +4,12 @@ export function add_poi_tooltip(map, layername='', popup) {
 
         map.getCanvas().style.cursor = 'pointer';
 
-        var coordinates = e.features[0].geometry.coordinates.slice();
         var name = e.features[0].properties.name;
-            
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
 
         // Populate the popup and set its coordinates
         // based on the feature found.
-        popup.setLngLat(coordinates).setHTML(name).addTo(map);
+        popup.setLngLat(e.lngLat).setHTML(name).addTo(map);
+        map.triggerRepaint();
 
     });
     
@@ -29,24 +22,17 @@ export function add_poi_iframe(map, layername='', popup){
 
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
-
-        var coordinates = e.features[0].geometry.coordinates.slice();
-        var name = e.features[0].properties.name;
             
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
+        var uri =  e.features[0].properties.wiki_article
+        var iframe_source = `src="${uri}"`;
+        var inline_styling = 'style="display: flex; min-width: 100%; min-height: 100%; background-color: rgba(240, 248, 255, 0)"'
 
-        var uri = 'https://de.wikipedia.org/wiki/Mount_Rushmore_National_Memorial';
-
-        var content = '<iframe src="' + uri + '" seamless><\iframe>';
+        var content = `<iframe ${iframe_source} class="poi_iframe" scrolling="auto" ${inline_styling}><\iframe>`;
 
         // Populate the popup and set its coordinates
         // based on the feature found.
-        popup.setLngLat(coordinates).setHTML(content).addTo(map);
+        popup.setLngLat(e.lngLat).setHTML(content).addTo(map);
+        map.triggerRepaint();
 
     });
 };
