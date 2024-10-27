@@ -1,4 +1,4 @@
-import { fetch_wiki_images } from './get_page_images.js';
+import { fetch_wiki_images } from './get_wikimedia_images.js';
 
 export function add_poi_tooltip(map, layername='', popup) {
 
@@ -42,43 +42,67 @@ export function add_poi_iframe(map, layername='', popup){
         var name =  e.features[0].properties.name;
 
         var iframe_source = `src="${uri}"`;
-        var inline_styling = 'style="position: relative; display: flex; min-width: 100%; min-height: 100%; background-color: none" class="poi_iframe"';
-        var wikipedia_iframe = String.raw`<iframe ${iframe_source} scrolling="auto" ${inline_styling}></iframe>`;
+        var wikipedia_iframe = String.raw`<iframe class="col-sm-12" id="wiki_iframe" ${iframe_source}></iframe>`;
 
-
-
-        // prepare html content of popup
-        var html_content = '';
+        // get iframes
+        var div_list = [wikipedia_iframe]
+        for (let i = 0; i < div_list.length; i++){
+            html_content += String.raw`${div_list[i]}`;
+        }
 
         // get images from wikimedia commons
-        var images = await fetch_wiki_images(name)
-        .then( function (response){
-            var img_tags = '';
-            for (let i = 0; i < response.length; i++){
-                console.log(`trying to create img tag from ${response[i]}`)
-                img_div += String.raw`<img src="${response[i]}">`;
+        var img_divs = ''
+        var wikimedia_images = await fetch_wiki_images(name);
+        if (wikimedia_images){$
+            // create img tags
+            var img_tags = [];
+            for (let i = 0; i < wikimedia_images.length; i++){
+                var img_tag = String.raw`<img src="${wikimedia_images[i]}"></img>`;
+                img_tags.push(img_tag);
             };
 
-            html_content += img_tags;
-            console.log(img_tags)
-            console.log(html_content)
-
-            // get iframes
-            var div_list = [wikipedia_iframe]
-            for (let i = 0; i < div_list.length; i++){
-                html_content += String.raw`<div>${div_list[i]}</div>`;
+            // make col-objects to use with boostrap
+            var n = 0;
+            var temp = ''
+            for (img_tag in img_tags){
+                
+                //if (n <= 2){
+                //    temp += `<div class="col-sm-4"><div class="img-fluid" id="img">${img_tags[img_tag]}</div></div>`;
+                //    n+=1;
+                //}
+                //else {
+                //    img_divs += `<div>${temp}</div>`;
+                //    temp = '';
+                //    n = 0;
+                //}
+                temp += `<div class="img-fluid" id="img">${img_tags[img_tag]}</div>`;
             }
+        }
 
-            console.log(html_content)
+        // add to html content
+        // prepare html content of popup
+        var html_content = `
+                            <div class="container" id="poi_popup">
+                                <div class="row" id="wikipedia_iframe_row">
+                                        ${wikipedia_iframe}
+                                </div>
+                                <div class="row" id="wikimedia_images_row">
+                                    ${img_divs}
+                                </div>
+                            </div>
+                            `;
+            
 
-            // Populate the popup and set its coordinates
-            // based on the feature found.
-            popup.setLngLat(coordinates).setHTML(html_content).addTo(map);
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates).setHTML(html_content).addTo(map);
 
-            map.triggerRepaint();
+        map.triggerRepaint();
+
+        
     });
 
-    });
+
 };
 
 

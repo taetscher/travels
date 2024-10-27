@@ -1,3 +1,5 @@
+import {add_travels_tooltip, remove_travels_tooltip} from '../tooltips/travels_tooltips.js';
+
 export function addTravels(map) {
     /**
     *Add source, layer and user interaction of swimming spots to map
@@ -9,7 +11,7 @@ export function addTravels(map) {
             type: 'geojson',
             data: './geojson/travels.geojson',
             attribution: "© taetscher"
-        })
+        });
 
     //add the travel layers
     map.addLayer({
@@ -23,7 +25,7 @@ export function addTravels(map) {
             'line-dasharray': [1, 2.5],
             'line-color': "#070424"
         }
-        })
+        });
 
     map.addLayer({
         id: 'car_layer',
@@ -39,7 +41,7 @@ export function addTravels(map) {
         layout: {
             'line-join': "round"
         }
-        })
+        });
 
     map.addLayer({
         id: 'ferry_layer',
@@ -51,5 +53,25 @@ export function addTravels(map) {
             'line-dasharray': [3, 3],
             'line-color': "#2f6ca8"
         }
-        })
+        });
+
+    // create instance of hover-popup
+    var travels_hover_popup = new maplibregl.Popup({
+        className: 'travel_hover',
+        closeButton: false,
+        closeOnClick: false,
+        closeOnMove: true,
+        maxWidth: 'none'
+        });
+    
+    // handle tooltips
+    var added_layers = ['flights_layer', 'car_layer', 'ferry_layer'];
+    for (let i = 0; i < added_layers.length; i++ ){
+        //display popup on mouseenter
+        add_travels_tooltip(map, added_layers[i], travels_hover_popup)
+    
+        //remove popup on mousleave
+        remove_travels_tooltip(map, added_layers[i], travels_hover_popup)
+    };
+    
 }

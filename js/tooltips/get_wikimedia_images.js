@@ -4,9 +4,14 @@ export function fetch_wiki_images (page_name){
 
     var params = {
         action: "query",
-        prop: "images",
+        list: "allimages",
         titles: page_name,
-        format: "json"
+        aifrom: page_name,
+        format: "json",
+        aiprop: "url",
+        aisort: "name",
+        aidir: "newer",
+        ailimit: "18"
     };
 
     url = url + "?origin=*";
@@ -18,20 +23,14 @@ export function fetch_wiki_images (page_name){
     fetch(url)
         .then(function(response){return response.json();})
         .then(function(response) {
-            var pages = response.query.pages;
-            for (var page in pages) {
-                for (var img of pages[page].images) {
-                    var img_title = img.title;
-                    var img_name = img_title.replaceAll(' ', '_');
-                    var media_url = fetch(String.raw`https://commons.wikimedia.org/wiki/${img_name}#/media/${img_name}`);
-                    img_response.push(media_url);
-                }
+            var imgs = response.query.allimages;
+
+            for (var i = 0; i < imgs.length; i++) {
+                var img_url = imgs[i].url;
+                img_response.push(img_url);
             }
         })
         .then(function(){
-            console.log(img_response)
-            console.log(`found ${img_response.length} images`)
-
             if (img_response.length < 1){
                 console.log('did not find any images on wikimedia commons.');
                 reject();
@@ -45,3 +44,4 @@ export function fetch_wiki_images (page_name){
     }
     )
 }
+

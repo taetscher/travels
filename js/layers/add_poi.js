@@ -1,4 +1,4 @@
-import {add_poi_tooltip, add_poi_iframe, remove_poi_tooltip} from './poi_tooltips.js';
+import {add_poi_tooltip, add_poi_iframe, remove_poi_tooltip} from '../tooltips/poi_tooltips.js';
 
 export async function addPOIs(map) {
     /**
@@ -33,7 +33,6 @@ export async function addPOIs(map) {
         })
     
     //create a popup objects
-
     var hover_popup = new maplibregl.Popup({
         className: 'poi_hover',
         closeButton: false,
@@ -47,7 +46,7 @@ export async function addPOIs(map) {
         closeButton: false,
         closeOnClick: true,
         closeOnMove: false,
-        maxWidth: '60%'
+        maxWidth: '75%'
         });
 
     // handle tooltips

@@ -1,7 +1,0 @@
-/* overwrite wikipedia styling */
-
-.vector-legacy-sidebar {
-    background-color: rgba(240, 248, 255, 0);
-}
-
-#mw-panel .body { visibility: hidden; }
