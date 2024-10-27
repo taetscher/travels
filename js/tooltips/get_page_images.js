@@ -1,5 +1,5 @@
-export async function fetch_wiki_images (page_name){
-
+export function fetch_wiki_images (page_name){
+    return new Promise(function(resolve, reject) {
     var url = "https://en.wikipedia.org/w/api.php"; 
 
     var params = {
@@ -23,7 +23,7 @@ export async function fetch_wiki_images (page_name){
                 for (var img of pages[page].images) {
                     var img_title = img.title;
                     var img_name = img_title.replaceAll(' ', '_');
-                    var media_url = String.raw`https://commons.wikimedia.org/wiki/${img_name}#/media/${img_name}`;
+                    var media_url = fetch(String.raw`https://commons.wikimedia.org/wiki/${img_name}#/media/${img_name}`);
                     img_response.push(media_url);
                 }
             }
@@ -34,15 +34,14 @@ export async function fetch_wiki_images (page_name){
 
             if (img_response.length < 1){
                 console.log('did not find any images on wikimedia commons.');
-                return null;
+                reject();
             }
             else {
                 console.log(`found some nice images on wikimedia commons! :-)`);
-                return img_response;
+                resolve(img_response);
             }
         })
         .catch(function(error){console.log(error);});
-    
-    
-    
+    }
+    )
 }
