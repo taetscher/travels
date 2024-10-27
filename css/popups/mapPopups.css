@@ -7,14 +7,26 @@
 .maplibregl-popup-content {
     backdrop-filter: blur(0.5em);
     background-color: var(--background_color);
+
+    margin-top: 3em; /* controls distance to clicked poi */
 }
 
 .maplibregl-popup-tip{
     display: none;
 }
 
-#poi_popup {
-    max-height: 100%;
+#poi_popup{
+    max-height: 45em;
+    max-width: 50em;
+    overflow-y: scroll;
+    margin: none;
+}
+
+#wikipedia_iframe_row{
+    height: 35em;
+    width: 40em;
+
+
 }
 
 #wikipedia_iframe {
@@ -24,9 +36,12 @@
 
 #wikimedia_images_row {
     position:relative;
-    overflow-y: scroll;
+    overflow-y: auto;
+    padding-top: 2em;
 }
 
-#img {
-    border-radius: 50%;
+#wiki_img {
+    border-radius: 10px;
+    max-height: 20em;
+    max-width: 10em;
 }

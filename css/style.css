@@ -1,6 +1,7 @@
 @import url('./popups/mapPopups.css');
 @import url('./popups/hover/hover_popups.css');
 @import url('./mapelements/maplibreStyleBar.css');
+@import url('./scrollbar.css');
 
 #map {
     position: absolute;

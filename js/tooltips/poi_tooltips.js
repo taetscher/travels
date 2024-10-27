@@ -42,9 +42,9 @@ export function add_poi_iframe(map, layername='', popup){
         var name =  e.features[0].properties.name;
 
         var iframe_source = `src="${uri}"`;
-        var wikipedia_iframe = String.raw`<iframe class="col-sm-12" id="wiki_iframe" ${iframe_source}></iframe>`;
+        var wikipedia_iframe = String.raw`<iframe class="col-sm-12" id="wiki_iframe" style="width:100%; height=100%;" ${iframe_source}></iframe>`;
 
-        // get iframes
+        // get iframe(s)
         var div_list = [wikipedia_iframe]
         for (let i = 0; i < div_list.length; i++){
             html_content += String.raw`${div_list[i]}`;
@@ -66,16 +66,15 @@ export function add_poi_iframe(map, layername='', popup){
             var temp = ''
             for (img_tag in img_tags){
                 
-                //if (n <= 2){
-                //    temp += `<div class="col-sm-4"><div class="img-fluid" id="img">${img_tags[img_tag]}</div></div>`;
-                //    n+=1;
-                //}
-                //else {
-                //    img_divs += `<div>${temp}</div>`;
-                //    temp = '';
-                //    n = 0;
-                //}
-                temp += `<div class="img-fluid" id="img">${img_tags[img_tag]}</div>`;
+                if (n <= 2){
+                    temp += `<div class="img-fluid"><div class="img-fluid" id="wiki_img">${img_tags[img_tag]}</div></div>`;
+                    n+=1;
+                }
+                else {
+                    img_divs += `<div>${temp}</div>`;
+                    temp = '';
+                    n = 0;
+                }
             }
         }
 
