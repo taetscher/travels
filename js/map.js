@@ -1,6 +1,6 @@
 
-import {addPOIs} from './add_poi.js';
-import {addTravels} from './add_travels.js';
+import {addPOIs} from './layers/add_poi.js';
+import {addTravels} from './layers/add_travels.js';
 
 
 //create new map
@@ -10,7 +10,7 @@ const map = new maplibregl.Map({
             hash: true, //set this to true when productive (shows xyz in URL and updates it on the fly)
             minZoom: 1,
             maxZoom: 19,
-            center: [47.5, 2.6],
+            center: [43.04, 2.45],
             zoom: 2
             //,preserveDrawingBuffer: true
           });

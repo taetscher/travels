@@ -1,10 +1,7 @@
 @import url('./popups/mapPopups.css');
-@import url('./popups/iframes/iframes.css');
 @import url('./popups/hover/hover_popups.css');
-@import url('./popups/wikipedia/wiki.css');
 @import url('./mapelements/maplibreStyleBar.css');
-
-
+@import url('./scrollbar.css');
 
 #map {
     position: absolute;
@@ -16,4 +13,5 @@
 
 *:focus {
     outline: 0;
+    border: none !important;
 }
