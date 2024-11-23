@@ -3,3 +3,6 @@ QGIS
 **/.idea/workspace.xml 
 **/.idea/tasks.xml
 maki_icons
+*.gpkg
+*.gpkg-shm
+*.gpkg-wal
