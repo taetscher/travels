@@ -12,7 +12,8 @@ export function add_poi_tooltip(map, layername='', popup) {
         // Populate the popup and set its coordinates
         // based on the feature found.
         popup.setLngLat(e.lngLat).setHTML(name).addTo(map);
-        map.triggerRepaint();
+
+        map.redraw()
 
     });
     
@@ -21,86 +22,55 @@ export function add_poi_tooltip(map, layername='', popup) {
 
 export function add_poi_iframe(map, layername='', popup){
 
+    var flewn = false;
+    var uri = '';
+
     map.on('click', layername, async function (e) {
 
         // Change the cursor style as a UI indicator.
-        map.getCanvas().style.cursor = 'pointer';
+        map.getCanvas().style.cursor = 'pointer';     
 
-        // fly to the scene of the crime
+        // get uri from clicked feature
+        uri =  e.features[0].properties.wiki_article;
+        
+        // fly to the scene of the crime (move slightly to the left of it)
         var coordinates = e.features[0].geometry.coordinates.slice();
+        coordinates[0] = coordinates[0] - 0.15;
+
         map.flyTo(
             {
                 center: coordinates,
                 zoom: 10.5,
-                speed: 0.9,
+                speed: 1.6,
                 essential: true
             }
         );
-        
-        // add a popup
-        var uri =  e.features[0].properties.wiki_article;
-        var name =  e.features[0].properties.name;
 
-        var iframe_source = `src="${uri}"`;
-        var wikipedia_iframe = String.raw`<iframe class="col-sm-12" id="wiki_iframe" style="width:100%; height=100%;" ${iframe_source}></iframe>`;
+        flewn = true;
 
-        // get iframe(s)
-        var div_list = [wikipedia_iframe]
-        for (let i = 0; i < div_list.length; i++){
-            html_content += String.raw`${div_list[i]}`;
-        }
-
-        // get images from wikimedia commons
-        var img_divs = ''
-        var wikimedia_images = await fetch_wiki_images(name);
-        if (wikimedia_images){$
-            // create img tags
-            var img_tags = [];
-            for (let i = 0; i < wikimedia_images.length; i++){
-                var img_tag = String.raw`<img src="${wikimedia_images[i]}"></img>`;
-                img_tags.push(img_tag);
-            };
-
-            // make col-objects to use with boostrap
-            var n = 0;
-            var temp = ''
-            for (img_tag in img_tags){
-                
-                if (n <= 2){
-                    temp += `<div class="img-fluid"><div class="img-fluid" id="wiki_img">${img_tags[img_tag]}</div></div>`;
-                    n+=1;
-                }
-                else {
-                    img_divs += `<div>${temp}</div>`;
-                    temp = '';
-                    n = 0;
-                }
-            }
-        }
-
-        // add to html content
-        // prepare html content of popup
-        var html_content = `
-                            <div class="container" id="poi_popup">
-                                <div class="row" id="wikipedia_iframe_row">
-                                        ${wikipedia_iframe}
-                                </div>
-                                <div class="row" id="wikimedia_images_row">
-                                    ${img_divs}
-                                </div>
-                            </div>
-                            `;
-            
-
-        // Populate the popup and set its coordinates
-        // based on the feature found.
-        popup.setLngLat(coordinates).setHTML(html_content).addTo(map);
-
-        map.triggerRepaint();
-
-        
     });
 
+    map.on('moveend', function(e){
+
+        if (flewn){
+
+            // generate wikipedia iframe
+            var iframe_source = `src="${uri}"`;
+            var wikipedia_iframe = String.raw`<iframe class="container" id="wiki_iframe" ${iframe_source}></iframe>`;
+            popup.setHTML(wikipedia_iframe);
+            
+            // get coordinates of bounds of viewport
+            var current_bounds = map.getBounds();
+            var topleft = [current_bounds["_sw"]["lng"], current_bounds["_ne"]["lat"]]
+            
+            // add popup to map
+            popup.setLngLat(topleft).addTo(map);
+        }
+
+        // reset popup attributes
+        flewn = false;
+        uri = '';
+    });
 
 };
 
@@ -111,5 +81,7 @@ export function remove_poi_tooltip(map, layername='', popup) {
         map.getCanvas().style.cursor = '';
         if (popup) popup.remove();
     });
+
+    map.redraw()
 
 };

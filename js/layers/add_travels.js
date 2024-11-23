@@ -68,10 +68,12 @@ export function addTravels(map) {
     var added_layers = ['flights_layer', 'car_layer', 'ferry_layer'];
     for (let i = 0; i < added_layers.length; i++ ){
         //display popup on mouseenter
-        add_travels_tooltip(map, added_layers[i], travels_hover_popup)
+        // --> TODO: data cleaning 
+        //add_travels_tooltip(map, added_layers[i], travels_hover_popup)
     
         //remove popup on mousleave
-        remove_travels_tooltip(map, added_layers[i], travels_hover_popup)
+        // --> TODO: data cleaning 
+        //remove_travels_tooltip(map, added_layers[i], travels_hover_popup)
     };
     
 }

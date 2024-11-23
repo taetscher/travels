@@ -2,7 +2,7 @@ export function add_travels_tooltip(map, layername='', popup) {
 
     map.on('mouseenter', layername, function (e){
 
-        map.getCanvas().style.cursor = 'pointer';
+        map.getCanvas().style.cursor = 'crosshair';
 
         var from_poi = e.features[0].properties.from_poi;
         var to_poi = e.features[0].properties.to_poi;
@@ -13,7 +13,6 @@ export function add_travels_tooltip(map, layername='', popup) {
         // Populate the popup and set its coordinates
         // based on the feature found.
         popup.setLngLat(e.lngLat).setHTML(display_text).addTo(map);
-        map.triggerRepaint();
 
     });
     

@@ -1,4 +1,5 @@
 import {add_poi_tooltip, add_poi_iframe, remove_poi_tooltip} from '../tooltips/poi_tooltips.js';
+import { loadIcons } from '../icons/load_icons.js';
 
 export async function addPOIs(map) {
     /**
@@ -6,8 +7,8 @@ export async function addPOIs(map) {
     *@param  {mapbox map object}   map   The map which receives the poi layer
     */
 
-    const poi_signature = await map.loadImage('./mapstyles/icons/loc.png');
-    map.addImage('custom_poi', poi_signature.data);
+    // add images for styling
+    await loadIcons(map);
     
     //in order to use data with mapbox, you need to add a source first
     map.addSource('poi_source', {
@@ -24,15 +25,27 @@ export async function addPOIs(map) {
         id: 'pois',
         type: 'symbol',
         source: 'poi_source',
-        maxzoom: 14,
+        maxzoom: 20,
         layout: {
-            'icon-image': 'custom_poi',
+            'icon-image': ['concat', 'custom_', ['get', 'kind']],
             'icon-size': 0.3,
-            'icon-overlap': "never"
+            'icon-overlap': "never",
+            'symbol-sort-key': [
+                'match', ['get', 'kind'],
+                'metropolitan_area', 0,
+                'airport', 1,
+                'port', 2,
+                'city', 3,
+                'village', 4,
+                'point_of_interest', 5,
+                'small_dwelling', 6,
+                'hotel', 7
+                , 8
+            ]
         }
         })
     
-    //create a popup objects
+    //create popup objects
     var hover_popup = new maplibregl.Popup({
         className: 'poi_hover',
         closeButton: false,
@@ -43,10 +56,10 @@ export async function addPOIs(map) {
 
     var iframe_popup = new maplibregl.Popup({
         className: 'poi_iframe_container',
-        closeButton: false,
+        closeButton: true,
         closeOnClick: true,
-        closeOnMove: false,
-        maxWidth: '75%'
+        closeOnMove: true,
+        maxWidth: 'none'
         });
 
     // handle tooltips
