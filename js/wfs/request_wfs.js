@@ -16,7 +16,7 @@ export function addRiagProjects(map) {
     const url = wfsUrl + '?' + new URLSearchParams(params).toString();
     console.log(url);
 
-    // fetch the data
+    // request GeoJson from RIAG Server
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -25,21 +25,24 @@ export function addRiagProjects(map) {
             return response.json();
         })
         .then(geojson => {
+
             // Add source to map
             map.addSource('riag-projects', {
                 type: 'geojson',
                 data: geojson
+                //cluster: true,
+                //clusterMaxZoom: 7,
+                //clusterRadius: 50
             });
 
             // Add maplibre layer
             map.addLayer({
-            id: 'wfs-layer',
-            type: 'circle',
-            source: 'riag-projects',
-            paint: riag_projects_layerstyle
-        });
+                id: 'wfs-layer',
+                type: 'circle',
+                source: 'riag-projects',
+                paint: riag_projects_layerstyle
+            });
             
         })
         .catch(error => console.error('Error fetching WFS data:', error));
-
-}
+};
