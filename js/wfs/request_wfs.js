@@ -1,3 +1,5 @@
+import {riag_projects_layerstyle} from './layout_riag_projects.js';
+
 export function addRiagProjects(map) {
 
     // WFS Parameters
@@ -6,16 +8,16 @@ export function addRiagProjects(map) {
         service: 'WFS',
         version: '2.0.0',
         request: 'GetFeature',
-        typeName: 'Engestrasse_9', // Replace with correct namespace and layer name
+        typeName: 'Engestrasse_9', // layer name
         outputFormat: 'application/json'
     };
 
-    // construct the URL for WFS request
+    // construct the URL to request GeoJson from WFS Server
     const url = wfsUrl + '?' + new URLSearchParams(params).toString();
     console.log(url);
 
     // fetch the data
-    data = fetch(url)
+    fetch(url)
         .then(response => {
             if (!response.ok) {
             throw new Error(`WFS request failed: ${response.statusText}`);
@@ -34,11 +36,8 @@ export function addRiagProjects(map) {
             id: 'wfs-layer',
             type: 'circle',
             source: 'riag-projects',
-            paint: {
-                'circle-radius': 15,
-                'circle-color': '#007cbf'
-            }
-            });
+            paint: riag_projects_layerstyle
+        });
             
         })
         .catch(error => console.error('Error fetching WFS data:', error));

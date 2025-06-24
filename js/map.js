@@ -7,7 +7,7 @@ import {addRiagProjects} from './wfs/request_wfs.js'
 //create new map
 const map = new maplibregl.Map({
   container: 'map',
-  style: 'https://api.maptiler.com/maps/landscape/style.json?key=9evOdBDbZ9ckseqCzPcE', // 100k free requests per Month
+  style: 'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.lightbasemap.vt/style.json', // 100k free requests per Month
   hash: true, //set this to true when productive (shows xyz in URL and updates it on the fly)
   minZoom: 1,
   maxZoom: 19,
